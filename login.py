@@ -40,7 +40,7 @@ class LoginWindow(QMainWindow):
         username = self.lineedit_username.text()
         password = self.lineedit_password.text()
         cursor = self.db.cursor()
-        sql = "SELECT slatedHash FROM users WHERE username = %s"
+        sql = "SELECT saltedHash FROM users WHERE username = %s"
         cursor.execute(sql, (username,))
         result = cursor.fetchone()
         if result:
