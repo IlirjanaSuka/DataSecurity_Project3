@@ -18,7 +18,7 @@ class SignupWindow(QMainWindow):
         self.lineedit_email = QLineEdit(self)
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
-        self.button_signup = QPushButton("Login", self)
+        self.button_signup = QPushButton("Signup", self)
         self.button_signup.clicked.connect(self.signup)
 
         layout = QVBoxLayout()

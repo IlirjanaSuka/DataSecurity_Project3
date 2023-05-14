@@ -1,5 +1,6 @@
 import sys
 import pymysql
+import bcrypt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QMessageBox
 
 class LoginWindow(QMainWindow):
@@ -15,7 +16,7 @@ class LoginWindow(QMainWindow):
         self.lineedit_password = QLineEdit(self)
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
-        self.button_login = QPushButton("Hyr", self)
+        self.button_login = QPushButton("Login", self)
 
         layout = QVBoxLayout()
         layout.addWidget(self.label_username)
@@ -48,23 +49,17 @@ def login(self):
 
         if result:
             hashed_password = result[0]
-
-            
             if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
-                QMessageBox.information(self, "Sukses", "Autentifikimi u realizua me sukses!")
- 
+                QMessageBox.information(self, "Sukses", "Welcome Back!")
             else:
-                QMessageBox.warning(self, "Gabim", "Fjalëkalimi është gabim!")
-         
-
-
+                QMessageBox.warning(self, "Gabim", "Password or username wrong!")
             self.db.commit()
 
         cursor.close()
         self.db.close()
         
-        app = QApplication(sys.argv)
-signup_window = SignupWindow()
+app = QApplication(sys.argv)
+signup_window = LoginWindow()
 signup_window.show()
 sys.exit(app.exec_())
 
