@@ -1,4 +1,5 @@
 import sys
+import pymysql
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
 class SignupWindow(QMainWindow):
@@ -17,7 +18,7 @@ class SignupWindow(QMainWindow):
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
         self.button_signup = QPushButton("Regjistrohu", self)
-        
+
         layout = QVBoxLayout()
         layout.addWidget(self.label_username)
         layout.addWidget(self.lineedit_username)
@@ -31,7 +32,13 @@ class SignupWindow(QMainWindow):
         widget.setLayout(layout)
 
         self.setCentralWidget(widget)
-        
+        self.db = pymysql.connect(
+            host="localhost",
+            user="root",
+            password="1234",
+            database="vsc"
+        )
+
 app = QApplication(sys.argv)
 signup_window = SignupWindow()
 signup_window.show()
