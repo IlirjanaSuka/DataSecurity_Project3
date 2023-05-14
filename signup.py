@@ -10,15 +10,15 @@ class SignupWindow(QMainWindow):
         self.setWindowTitle("Regjistrimi")
         self.setGeometry(100, 100, 300, 200)
 
-        self.label_username = QLabel("Përdoruesi:", self)
-        self.label_password = QLabel("Fjalëkalimi:", self)
+        self.label_username = QLabel("Username:", self)
+        self.label_password = QLabel("Password:", self)
         self.label_email = QLabel("Email:", self)
         self.lineedit_username = QLineEdit(self)
         self.lineedit_password = QLineEdit(self)
         self.lineedit_email = QLineEdit(self)
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
-        self.button_signup = QPushButton("Regjistrohu", self)
+        self.button_signup = QPushButton("Login", self)
         self.button_signup.clicked.connect(self.signup)
 
         layout = QVBoxLayout()
