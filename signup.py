@@ -38,7 +38,7 @@ class SignupWindow(QMainWindow):
         self.db = pymysql.connect(
             host="localhost",
             user="root",
-            password="root",
+            password="1234",
             database="vsc"
         )
         

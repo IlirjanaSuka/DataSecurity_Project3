@@ -17,7 +17,7 @@ class LoginWindow(QMainWindow):
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
         self.button_login = QPushButton("Login", self)
-
+        self.button_login.clicked.connect(self.login)
         layout = QVBoxLayout()
         layout.addWidget(self.label_username)
         layout.addWidget(self.lineedit_username)
@@ -33,20 +33,16 @@ class LoginWindow(QMainWindow):
         self.db = pymysql.connect(
             host="localhost",
             user="root",
-            password="root",
+            password="1234",
             database="vsc"
         )
-
-
-def login(self):
+    def login(self):
         username = self.lineedit_username.text()
         password = self.lineedit_password.text()
-
         cursor = self.db.cursor()
-        sql = "SELECT password FROM users WHERE username = %s"
+        sql = "SELECT slatedHash FROM users WHERE username = %s"
         cursor.execute(sql, (username,))
         result = cursor.fetchone()
-
         if result:
             hashed_password = result[0]
             if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
@@ -54,7 +50,7 @@ def login(self):
             else:
                 QMessageBox.warning(self, "Gabim", "Password or username wrong!")
             self.db.commit()
-
+            
         cursor.close()
         self.db.close()
         
