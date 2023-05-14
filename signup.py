@@ -1,4 +1,5 @@
 import sys
+import bcrypt
 import pymysql
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
