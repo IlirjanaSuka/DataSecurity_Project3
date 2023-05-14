@@ -35,7 +35,39 @@ class LoginWindow(QMainWindow):
             password="root",
             database="vsc"
         )
+
 app = QApplication(sys.argv)
-login_window = LoginWindow()
-login_window.show()
+signup_window = SignupWindow()
+signup_window.show()
 sys.exit(app.exec_())
+
+def login(self):
+        username = self.lineedit_username.text()
+        password = self.lineedit_password.text()
+
+        cursor = self.db.cursor()
+        sql = "SELECT password FROM users WHERE username = %s"
+        cursor.execute(sql, (username,))
+        result = cursor.fetchone()
+
+        if result:
+            hashed_password = result[0]
+
+            
+            if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
+                QMessageBox.information(self, "Sukses", "Autentifikimi u realizua me sukses!")
+ 
+            else:
+                QMessageBox.warning(self, "Gabim", "Fjalëkalimi është gabim!")
+         
+
+
+            self.db.commit()
+
+        cursor.close()
+        self.db.close()
+
+
+
+
+   
