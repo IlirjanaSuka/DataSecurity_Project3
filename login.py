@@ -36,10 +36,6 @@ class LoginWindow(QMainWindow):
             database="vsc"
         )
 
-app = QApplication(sys.argv)
-signup_window = SignupWindow()
-signup_window.show()
-sys.exit(app.exec_())
 
 def login(self):
         username = self.lineedit_username.text()
@@ -66,6 +62,12 @@ def login(self):
 
         cursor.close()
         self.db.close()
+        
+        app = QApplication(sys.argv)
+signup_window = SignupWindow()
+signup_window.show()
+sys.exit(app.exec_())
+
 
 
 
