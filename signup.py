@@ -32,6 +32,7 @@ class SignupWindow(QMainWindow):
         widget.setLayout(layout)
 
         self.setCentralWidget(widget)
+        
         self.db = pymysql.connect(
             host="localhost",
             user="root",
