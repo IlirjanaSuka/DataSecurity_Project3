@@ -39,6 +39,24 @@ class SignupWindow(QMainWindow):
             password="1234",
             database="vsc"
         )
+        
+        def signup(self):
+            username = self.lineedit_username.text()
+            password = self.lineedit_password.text()
+            email = self.lineedit_email.text()
+
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+            cursor = self.db.cursor()
+            try:
+                sql = "INSERT INTO users (username, slatedHash, email) VALUES (%s, %s, %s)"
+                values = (username, hashed_password, email)
+                cursor.execute(sql, values)
+            except:
+                print("Username Already been taken. Please try another one!")
+            self.db.commit()
+            cursor.close()
+            self.db.close()
 
 app = QApplication(sys.argv)
 signup_window = SignupWindow()
