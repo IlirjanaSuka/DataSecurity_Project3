@@ -19,6 +19,7 @@ class SignupWindow(QMainWindow):
         self.lineedit_password.setEchoMode(QLineEdit.Password)
 
         self.button_signup = QPushButton("Regjistrohu", self)
+        self.button_signup.clicked.connect(self.signup)
 
         layout = QVBoxLayout()
         layout.addWidget(self.label_username)
@@ -37,27 +38,26 @@ class SignupWindow(QMainWindow):
         self.db = pymysql.connect(
             host="localhost",
             user="root",
-            password="1234",
+            password="root",
             database="vsc"
         )
         
-        def signup(self):
-            username = self.lineedit_username.text()
-            password = self.lineedit_password.text()
-            email = self.lineedit_email.text()
-
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-            cursor = self.db.cursor()
-            try:
-                sql = "INSERT INTO users (username, slatedHash, email) VALUES (%s, %s, %s)"
-                values = (username, hashed_password, email)
-                cursor.execute(sql, values)
-            except:
-                print("Username Already been taken. Please try another one!")
-            self.db.commit()
-            cursor.close()
-            self.db.close()
+    def signup(self):
+        username = self.lineedit_username.text()
+        password = self.lineedit_password.text()
+        email = self.lineedit_email.text()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        cursor = self.db.cursor()
+        try:
+            sql = "INSERT INTO users (username, slatedHash, email) VALUES (%s, %s, %s)"
+            values = (username, hashed_password, email)
+            cursor.execute(sql, values)
+            print("Success")
+        except:
+            print("Please try another username!")
+        self.db.commit()
+        cursor.close()
+        self.db.close()
 
 app = QApplication(sys.argv)
 signup_window = SignupWindow()
